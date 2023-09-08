@@ -12,8 +12,8 @@ int main(void)
 
 	while (number <= 9)
 	{
-		number++;
 		printf("%d", number);
+		number++;
 	}
 	return (0);
 }
