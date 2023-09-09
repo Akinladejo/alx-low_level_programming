@@ -15,11 +15,9 @@ int main(void)
 	{
 		for (number2 = number1; number2 <= 99; number2++)
 		{
-			putchar((number1 / 10) + '0');
-			putchar((number1 % 10) + '0');
-			putchar(' ');
-			putchar((number2 / 10) + '0');
-			putchar((number2 % 10) + '0');
+			printf("%02d", number1);
+			printf(' ');
+			printf("%02d", number2);
 			if (number1 != 98 || number2 != 99)
 			{
 				putchar(',');
