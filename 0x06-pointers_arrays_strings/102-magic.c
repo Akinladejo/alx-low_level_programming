@@ -1,6 +1,9 @@
 #include <stdio.h>
 
 /**
+ * main - check the code
+ *
+ * Return: Always 0
  * write your line of code here...
  * Remember:
  * - you are not allowed to use a
@@ -9,7 +12,7 @@
  * - you are not allowed to code anything else than this line of code
  */
 
- int main(void)
+int main(void)
 {
 	int n;
 	int a[5];
