@@ -1,80 +1,88 @@
 #include "dog.h"
 
-
+#include <stdlib.h>
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
 /**
-*_strlen - returns length of
-*a string
-*@str: string to be counted
-*Return: returns length of string
-*/
-int _strlen(char *str)
-{
-int len = 0;
-while (str)
-len++;
-
-return (len);
-}
-
-
-/**
-*_strcopy - copy string pointed by src
-*into dest variable
-*@dest:buffer storing string copy
-*@src: buffer storing string to copy
-*Return:returns copied string
-*/
-char *_strcopy(char *dest, char *src)
-{
-int index = 0;
-
-for (; src[index] ; index++)
-dest[index] = src[index];
-
-dest[index] = '\0';
-return (dest);
-}
-
-
-
-
-/**
-*new_dog - creates a new dog
-*@name: name of new dog
-*@age: age of new dog
-*@owner: owner of new dog
-*Return: returns NULL in case
-*of failure
+* new_dog - function
+* @name: name of dog
+* @age: age of new doggo
+* @owner: owner of new doggo
+*
+* Description: function to create a new dog. Store copy of name & owner
+* Return: ptr, null if fail
 */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-dog_t *doggo;
+	char *nename, *neowner;
+	int lename, leowner;
 
-if (name == NULL || age < 0 || owner == NULL)
-return (NULL);
+	dog_t *doggo = malloc(sizeof(dog_t));
 
-doggo = malloc(sizeof(dog_t));
-if (doggo == NULL)
-return (NULL);
+	if (doggo == NULL)
+		return (NULL);
+	_strlen(name);
+	lename = _strlen(name);
+	nename = malloc((lename + 1) * sizeof(char));
+	if (nename == NULL)
+	{
+		free(doggo);
+		return (NULL);
+	}
+	_strcpy(nename, name);
 
-doggo->name = malloc(sizeof(char) * (_strlen(name) + 1));
-if (doggo->name == NULL)
-{
-free(doggo);
-return (NULL);
+	_strlen(owner);
+	leowner = _strlen(owner);
+	neowner = malloc((leowner + 1) * sizeof(char));
+	if (neowner == NULL)
+	{
+		free(nename);
+		free(doggo);
+		return (NULL);
+	}
+	_strcpy(neowner, owner);
+
+	doggo->name = nename;
+	doggo->age = age;
+	doggo->owner = neowner;
+
+	return (doggo);
 }
 
-doggo->owner = malloc(sizeof(char) * (_strlen(owner) + 1));
-if (doggo->owner == NULL)
+/**
+* _strlen - function
+* @s: first operand & pointer
+*
+* Description: function that returns the length of a string
+* Return: Always 0
+*/
+int _strlen(char *s)
 {
-free(doggo->name);
-free(doggo);
-return (NULL);
+	int index = 0;
+
+	while (*s != '\0')
+	{
+		index++;
+		s++;
+	}
+	return (index);
 }
+/**
+* _strcpy - function
+* @src: copy from
+* @dest: copy to
+*
+* Description: copies strng pnted by src to dest with null
+* Return: char
+*/
+char *_strcpy(char *dest, char *src)
+{
+	int i;
 
-doggo->name = _strcopy(doggo->name, name);
-doggo->age = age;
-doggo->owner = _strcopy(doggo->owner, owner);
-
-return (doggo);
+	for (i = 0; src[i]; i++)
+	{
+		dest[i] = src[i];
+	}
+	dest[i] = '\0';
+	return (dest);
 }
