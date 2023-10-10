@@ -3,10 +3,11 @@
 #include <stdlib.h>
 
 /**
- * pirnt_dog - print struct dog function
- * @d: dog init
+ * print_dog - print struct dog function
+ * @d: dog identifier
  *
- * Description: function to print a dog
+ * Description: struct dog print function
+ * Return: 0 Success
  */
 
 void print_dog(struct dog *d)
