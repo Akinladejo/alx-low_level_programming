@@ -4,7 +4,7 @@
  * main - math operations
  * @argc: count arg
  * @argv: argument1
- * Return: 1 success
+ * Return: success 1
  */
 
 int main(int argc, char *argv[])
