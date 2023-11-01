@@ -34,7 +34,7 @@ void check_elf(unsigned char *e_ident) {
 void print_magic(unsigned char *e_ident) {
     int index;
 
-    printf("  Magic:   ");
+    printf(" Magic:  ");
 
     for (index = 0; index < EI_NIDENT; index++) {
         printf("%02x", e_ident[index]);
@@ -47,7 +47,7 @@ void print_magic(unsigned char *e_ident) {
 }
 
 void print_class(unsigned char *e_ident) {
-    printf("  Class:                             ");
+    printf(" Class:               ");
 
     switch (e_ident[EI_CLASS]) {
         case ELFCLASSNONE:
@@ -65,7 +65,7 @@ void print_class(unsigned char *e_ident) {
 }
 
 void print_data(unsigned char *e_ident) {
-    printf("  Data:                              ");
+    printf(" Data:               ");
 
     switch (e_ident[EI_DATA]) {
         case ELFDATANONE:
@@ -83,7 +83,7 @@ void print_data(unsigned char *e_ident) {
 }
 
 void print_version(unsigned char *e_ident) {
-    printf("  Version:                           %d", e_ident[EI_VERSION]);
+    printf(" Version:              %d", e_ident[EI_VERSION]);
 
     switch (e_ident[EI_VERSION]) {
         case EV_CURRENT:
@@ -96,7 +96,7 @@ void print_version(unsigned char *e_ident) {
 }
 
 void print_osabi(unsigned char *e_ident) {
-    printf("  OS/ABI:                            ");
+    printf(" OS/ABI:              ");
 
     switch (e_ident[EI_OSABI]) {
         case ELFOSABI_NONE:
@@ -120,110 +120,4 @@ void print_osabi(unsigned char *e_ident) {
         case ELFOSABI_FREEBSD:
             printf("UNIX - FreeBSD\n");
             break;
-        case ELFOSABI_TRU64:
-            printf("UNIX - TRU64\n");
-            break;
-        case ELFOSABI_ARM:
-            printf("ARM\n");
-            break;
-        case ELFOSABI_STANDALONE:
-            printf("Standalone App\n");
-            break;
-        default:
-            printf("<unknown: %x>\n", e_ident[EI_OSABI]);
-    }
-}
-
-void print_abi(unsigned char *e_ident) {
-    printf("  ABI Version:                       %d\n", e_ident[EI_ABIVERSION]);
-}
-
-void print_type(unsigned int e_type, unsigned char *e_ident) {
-    if (e_ident[EI_DATA] == ELFDATA2MSB)
-        e_type >>= 8;
-
-    printf("  Type:                              ");
-
-    switch (e_type) {
-        case ET_NONE:
-            printf("NONE (None)\n");
-            break;
-        case ET_REL:
-            printf("REL (Relocatable file)\n");
-            break;
-        case ET_EXEC:
-            printf("EXEC (Executable file)\n");
-            break;
-        case ET_DYN:
-            printf("DYN (Shared object file)\n");
-            break;
-        case ET_DYN:
-            printf("DYN (Dynamic link\n");
-            break;
-        case ET_CORE:
-            printf("CORE (Core file)\n");
-            break;
-        default:
-            printf("<unknown: %x>\n", e_type);
-    }
-}
-
-void print_entry(unsigned long int e_entry, unsigned char *e_ident) {
-    if (e_ident[EI_DATA] == ELFDATA2MSB)
-        e_entry = ((e_entry >> 24) & 0x000000ff) |
-                  ((e_entry >> 8) & 0x0000ff00) |
-                  ((e_entry << 8) & 0x00ff0000) |
-                  ((e_entry << 24) & 0xff000000);
-
-    printf("  Entry point address:               0x%lx\n", e_entry);
-}
-
-void close_elf(int elf) {
-    if (close(elf) == -1) {
-        dprintf(STDERR_FILENO, "Error: Cannot close file\n");
-        exit(98);
-    }
-}
-
-int main(int argc, char *argv[]) {
-    int elf;
-    unsigned char e_ident[EI_NIDENT];
-    Elf64_Ehdr elf_header;
-
-    if (argc != 2) {
-        dprintf(STDERR_FILENO, "Usage: %s <ELF file>\n", argv[0]);
-        exit(97);
-    }
-
-    elf = open(argv[1], O_RDONLY);
-    if (elf == -1) {
-        dprintf(STDERR_FILENO, "Error: Cannot open file '%s'\n", argv[1]);
-        exit(98);
-    }
-
-    if (read(elf, &e_ident, EI_NIDENT) == -1) {
-        dprintf(STDERR_FILENO, "Error: Cannot read file\n");
-        close_elf(elf);
-        exit(98);
-    }
-
-    check_elf(e_ident);
-    print_magic(e_ident);
-    print_class(e_ident);
-    print_data(e_ident);
-    print_version(e_ident);
-    print_osabi(e_ident);
-    print_abi(e_ident);
-
-    if (read(elf, &elf_header, sizeof(Elf64_Ehdr)) == -1) {
-        dprintf(STDERR_FILENO, "Error: Cannot read file\n");
-        close_elf(elf);
-        exit(98);
-    }
-
-    print_type(elf_header.e_type, e_ident);
-    print_entry(elf_header.e_entry, e_ident);
-
-    close_elf(elf);
-    return 0;
-}
+        case ELFOSABI_TRU6
